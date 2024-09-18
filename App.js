@@ -3,7 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerContentScrollView } from '@react-navigation/drawer';
-import { View, Text, Image, StyleSheet, TouchableOpacity, Platform, Dimensions } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';  // Import SafeAreaView
 import Icon from 'react-native-vector-icons/Ionicons';
 import TodoList from './components/TodoList';
 import TaskDetail from './components/TaskDetail';
@@ -51,29 +52,31 @@ export default function App() {
   };
 
   const DrawerContent = ({ navigation }) => (
-    <DrawerContentScrollView contentContainerStyle={styles.drawerContent}>
-      <View style={styles.drawerHeader}>
-        <Image source={require('./assets/logo.png')} style={styles.drawerLogo} />
-        <Text style={styles.drawerTitle}>Taskly</Text>
-      </View>
+    <SafeAreaView style={styles.safeArea}>  {/* Use SafeAreaView */}
+      <DrawerContentScrollView contentContainerStyle={styles.drawerContent}>
+        <View style={styles.drawerHeader}>
+          <Image source={require('./assets/logo.png')} style={styles.drawerLogo} />
+          <Text style={styles.drawerTitle}>Taskly</Text>
+        </View>
 
-      <TouchableOpacity onPress={() => navigation.navigate('Settings')} style={styles.drawerItem}>
-        <Icon name="settings-outline" size={24} color="#333" />
-        <Text style={styles.drawerItemText}>Settings</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('FeedBack')} style={styles.drawerItem}>
-        <Icon name="chatbox-outline" size={24} color="#333" />
-        <Text style={styles.drawerItemText}>Feedback</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Report', { tasks })} style={styles.drawerItem}>
-        <Icon name="bar-chart-outline" size={24} color="#333" />
-        <Text style={styles.drawerItemText}>Report</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('FAQ')} style={styles.drawerItem}>
-        <Icon name="help-circle-outline" size={24} color="#333" />
-        <Text style={styles.drawerItemText}>FAQ</Text>
-      </TouchableOpacity>
-    </DrawerContentScrollView>
+        <TouchableOpacity onPress={() => navigation.navigate('Settings')} style={styles.drawerItem}>
+          <Icon name="settings-outline" size={24} color="#333" />
+          <Text style={styles.drawerItemText}>Settings</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('FeedBack')} style={styles.drawerItem}>
+          <Icon name="chatbox-outline" size={24} color="#333" />
+          <Text style={styles.drawerItemText}>Feedback</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Report', { tasks })} style={styles.drawerItem}>
+          <Icon name="bar-chart-outline" size={24} color="#333" />
+          <Text style={styles.drawerItemText}>Report</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('FAQ')} style={styles.drawerItem}>
+          <Icon name="help-circle-outline" size={24} color="#333" />
+          <Text style={styles.drawerItemText}>FAQ</Text>
+        </TouchableOpacity>
+      </DrawerContentScrollView>
+    </SafeAreaView>
   );
 
   const TabNavigator = () => (
@@ -187,6 +190,9 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1, // Make sure SafeAreaView takes the entire screen
+  },
   drawerContent: {
     flex: 1,
   },
